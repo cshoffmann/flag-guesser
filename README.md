@@ -1,2 +1,4 @@
 # flag-guesser
-An interactive web app that tests your knowledge of the flags of the world
+A game to try and guess world country flags!
+
+All flag images were downloaded from [Flagpedia.net](https://flagpedia.net/download/icons)

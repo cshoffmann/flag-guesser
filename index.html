@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Guesser</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300&family=Sriracha&display=swap" rel="stylesheet">
+    <script src="scripts/script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Flag Guesser</h1>
+    </header>
+    <main>
+        <!-- Menu view will show display instructions and allow the user to choose between quiz mode and learn mode -->
+        <section id="menu-view">
+            <div id="input-container">
+                <section id="menu-desc">
+                    <h2>What is Flag Guesser?</h2>
+                    <p>
+                        Flag Guesser is a light, interactive game that tests your knowledge of world maps. Currently the game
+                        only features 27 curated maps from around the world. The flags chosen are from some of the most populous countries from 
+                        the following five geographic regions: Americas, Asia, Europe, Africa, Oceania.
+                    </p>
+                    <h2>How to Play</h2>
+                    <p>
+                        In flag guesser, you can choose how many rounds you play (5, 10, or 20). Each round will display a random flag from around the world, 
+                        and you will be given 4 anwsers to choose from. At the end of the rounds, you will get to see how many flags you got correct!
+                    </p>
+                </section>
+                <article id="game-options">
+                    <select id="drop-down">
+                        <option value="5">5 Rounds</option>
+                        <option value="10">10 Rounds</option>
+                        <option value="20">20 Rounds</option>
+                      </select>
+                    <button id="start-btn">Start</button>
+                </article>
+            </div>
+        </section>
+
+        <!-- View that will display a random flag and the user must guess which one it is. The user will be scored at the ends-->
+        <section id="game-view" class="hidden">
+            <div id="time-container">
+                <span id="time">Begin!</span>
+            </div>
+            <div id="flag-container">
+                <img id="flag-image" src="">
+            </div>
+            <div id="user-input">
+                <!-- 
+                    I am going to generate four radio buttons with js, one will be correct country three others will be wrong. Something like below:
+
+                    <label><input type="radio" name="flag" value="correct"/>United States</label>
+                    <label><input type="radio" name="flag" value="wrong" checked/>Mexico</label>
+                    <label><input type="radio" name="flag" value="wrong" checked/>Russia</label>
+                    <label><input type="radio" name="flag" value="wrong" checked/>Indonesia</label>
+                -->
+            </div>
+        </section>
+    </main>
+</body>
+</html>
