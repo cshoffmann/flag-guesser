@@ -27,17 +27,22 @@
                     </p>
                     <h2>How to Play</h2>
                     <p>
-                        In flag guesser, you can choose how many rounds you play (5, 10, or 20). Each round will display a random flag from around the world, 
-                        and you will be given 4 anwsers to choose from. At the end of the rounds, you will get to see how many flags you got correct!
+                        Select your region and press the play button. Once you hit play, you will receive a word bank of the country names for the 
+                        corresponding region, and a flag will appear. Select a country name, you only have one chance to get the right country however, 
+                        so think wisely! You will be provided a score at the end to see how well you did.
                     </p>
                 </section>
                 <article id="game-options">
+                    <label for="drop-down">Select a Region: </label>
                     <select id="drop-down">
-                        <option value="5">5 Rounds</option>
-                        <option value="10">10 Rounds</option>
-                        <option value="20">20 Rounds</option>
+                        <option value="1">North America</option>
+                        <option value="2">South America</option>
+                        <option value="3">Europe</option>
+                        <option value="4">Asia</option>
+                        <option value="4">Africa</option>
+                        <option value="4">Oceania</option>
                       </select>
-                    <button id="start-btn">Start</button>
+                    <button id="start-btn">Play</button>
                 </article>
             </div>
         </section>
@@ -45,7 +50,7 @@
         <!-- View that will display a random flag and the user must guess which one it is. The user will be scored at the ends-->
         <section id="game-view" class="hidden">
             <div id="time-container">
-                <span id="time">Begin!</span>
+                <span id="time">Loading...</span>
             </div>
             <div id="flag-container">
                 <img id="flag-image" src="">
