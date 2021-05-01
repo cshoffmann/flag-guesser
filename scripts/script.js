@@ -19,31 +19,37 @@
     .catch(error => alert(error));
     
     window.onload = function() {
-        const start = document.getElementById("start-btn");
 
-        
-
-        /* checking if data lods sucessfully */
-        setTimeout(() => {
-            console.log(CountriesArray)
-            console.log(COUNTRIES)
-            console.log(country_codes)
-
-            let temp = CountriesArray.filter(country => country.continent == "Asia"); // will use filter to get countries of a region
-            console.log(temp)
-        }, 1000);
-
-        start.addEventListener("click", function() {
-            toggleView(); // switches to game-view
+        /* event listener for play button */
+        document.getElementById("start-btn").addEventListener("click", function() {
+            toggleView();
+            getCountries(CountriesArray);
 
             setTimeout(() => {
                 game();
             }, 1000);
         })
     }
+    
+    /**
+     * Returns a filtered array of countries based on continent (user input from #drop-down.value)
+     * @param {array} ary - array of countries
+     * @returns {array}
+     */
+    function getCountries(countries) {
+        let region = document.getElementById("drop-down").value;
+        console.log(region)
+
+        let temp = [];
+        temp = countries.filter(country => country.continent == region); // will use filter to get countries of a region
+        console.log(temp)
+        
+        return temp;
+    }
+
 
     async function game() {
-        const timeUI = document.getElementById("time");
+        const roundUI = document.getElementById("round");
         let rounds = document.getElementById("drop-down").value
         let anwsers = [];
 
@@ -55,7 +61,7 @@
             console.log("The correct country is: " + COUNTRIES[correct] + " (country code = " + correct +")")
 
             generateButtons(countries, correct); // creates four buttons based off of randomCountries() and generateFlat()
-            timeUI.innerText = `Round ${i+1}`
+            roundUI.innerText = `Round ${i+1}`
 
             let anwser = await round();
             console.log("anwser: "+anwser);
