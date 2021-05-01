@@ -1,21 +1,37 @@
 (function() {
     "use strict";
 
-    // countries from flagpedia API: https://flagpedia.net/
     var COUNTRIES;
+    var CountriesArray;
     var country_codes;
 
+    /* country names, iso codes and flags from flagpedia API: https://flagpedia.net/ */
     fetch("https://flagcdn.com/en/codes.json")
-        .then(response => response.json())
-        .then(data => COUNTRIES = data)
-        .then(data => console.log(data))    // delete later
-        .then(() => country_codes = Object.keys(COUNTRIES))
-        .then(data => console.log(data))    // delete later
-        .catch(error => alert(error))
+    .then(response => response.json())
+    .then(data => COUNTRIES = data)
+    .then(() => country_codes = Object.keys(COUNTRIES))
+    .catch(error => alert(error));
 
+    /* Array of country objects from github repo country-json: https://github.com/samayo/country-json */
+    fetch("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-continent.json")
+    .then(response => response.json())
+    .then(data => CountriesArray = data)
+    .catch(error => alert(error));
     
     window.onload = function() {
         const start = document.getElementById("start-btn");
+
+        
+
+        /* checking if data lods sucessfully */
+        setTimeout(() => {
+            console.log(CountriesArray)
+            console.log(COUNTRIES)
+            console.log(country_codes)
+
+            let temp = CountriesArray.filter(country => country.continent == "Asia"); // will use filter to get countries of a region
+            console.log(temp)
+        }, 1000);
 
         start.addEventListener("click", function() {
             toggleView(); // switches to game-view
@@ -41,7 +57,7 @@
             generateButtons(countries, correct); // creates four buttons based off of randomCountries() and generateFlat()
             timeUI.innerText = `Round ${i+1}`
 
-            let anwser = await countDown();
+            let anwser = await round();
             console.log("anwser: "+anwser);
             anwsers.push(anwser)
 
@@ -60,7 +76,7 @@
     }
 
     // starts the timer from 10 seconds
-    async function countDown() {
+    async function round() {
         // add event listeners for buttons 
         let btns = document.querySelectorAll(".btn")
         var choice = null;
@@ -72,26 +88,12 @@
         });
 
         return new Promise(resolve => {
-            
-
             var timerid = setInterval(() => {
-
-/*                 if(duration < 10) { // changes color of the timer ui to red
-                    timeUI.classList.add("quick")
-                }
-                if(duration == 0) {
-                    clearInterval(timerid);
-                    
-                    setTimeout(() => {
-                        resolve(0);
-                        timeUI.classList.remove("quick")
-                    }, 1000); 
-                } */
                 if(choice != null) {
                     clearInterval(timerid);
                     resolve(choice);
                 }
-            }, 1000);
+            }, 500);
         })
     }
 
