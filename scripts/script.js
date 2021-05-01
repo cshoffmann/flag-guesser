@@ -1,21 +1,19 @@
 (function() {
     "use strict";
 
-    var COUNTRIES;
-    var CountriesArray;
-    var country_codes;
+    var worldCountries;
+    var countryCodes;
 
     /* country names, iso codes and flags from flagpedia API: https://flagpedia.net/ */
     fetch("https://flagcdn.com/en/codes.json")
     .then(response => response.json())
-    .then(data => COUNTRIES = data)
-    .then(() => country_codes = Object.keys(COUNTRIES))
+    .then(data => countryCodes = data)
     .catch(error => alert(error));
 
     /* Array of country objects from github repo country-json: https://github.com/samayo/country-json */
     fetch("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-continent.json")
     .then(response => response.json())
-    .then(data => CountriesArray = data)
+    .then(data => worldCountries = data)
     .catch(error => alert(error));
     
     window.onload = function() {
@@ -23,30 +21,43 @@
         /* event listener for play button */
         document.getElementById("start-btn").addEventListener("click", function() {
             toggleView();
-            getCountries(CountriesArray);
+            let countries = getCountries(worldCountries);
+            shuffle(countries) // shuffles countries
+            console.log(countries)
+            
 
             setTimeout(() => {
-                game();
+                /* game(); */
             }, 1000);
         })
     }
     
     /**
      * Returns a filtered array of countries based on continent (user input from #drop-down.value)
-     * @param {array} ary - array of countries
+     * @param {array} countries - array of countries
      * @returns {array}
      */
-    function getCountries(countries) {
+    function getCountries(array) {
         let region = document.getElementById("drop-down").value;
-        console.log(region)
-
         let temp = [];
-        temp = countries.filter(country => country.continent == region); // will use filter to get countries of a region
-        console.log(temp)
+        temp = array.filter(country => country.continent == region); // will use filter to get countries of a region
         
         return temp;
     }
 
+    /**
+     * Randomizes order of elements in an array. 
+     * Based off of Durstenfeld shuffle algorithm: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+     * @param {array} array - any array
+     */
+    function shuffle(array) {
+        for(let i = array.length-1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i+1));
+            let temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
 
     async function game() {
         const roundUI = document.getElementById("round");
@@ -58,7 +69,7 @@
             console.log(countries);
 
             let correct = generateFlag(countries); // picks the country to generate flag and returns correct country name
-            console.log("The correct country is: " + COUNTRIES[correct] + " (country code = " + correct +")")
+            console.log("The correct country is: " + countryCodes[correct] + " (country code = " + correct +")")
 
             generateButtons(countries, correct); // creates four buttons based off of randomCountries() and generateFlat()
             roundUI.innerText = `Round ${i+1}`
@@ -149,7 +160,7 @@
                 btn.value = 0; // indicates wrong anwser
             }
 
-            btn.textContent = COUNTRIES[country];
+            btn.textContent = countryCodes[country];
             input.appendChild(btn);
         }
     }
