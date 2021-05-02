@@ -78,23 +78,21 @@ h1 {
 }
 
 #answer-bank {
-    margin-top: 60px;
+    margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 40%;
+    width: 65%;
+    overflow: auto;
 }
 
 #answer-bank button{
-    margin: 2px;
-}
-
-.quick {
-    color: red;
-}
-
-.btn {
     margin: 5px;
+    padding: 3px 6px;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 1rem;
+    border: 2px solid black;
 }
 
 .hidden {
