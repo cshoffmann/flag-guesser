@@ -1,3 +1,13 @@
+/**
+ * Data of country names and continents comes from github repo "country-json" 
+ * GitHub repo is linked here: https://github.com/samayo/country-json
+ * 
+ * Data of country names, iso codes, and flag images comes from flagpedia API: https://flagpedia.net/
+ * Flag images come from this url template: https://flagcdn.com/256x192/${country_abbreviation}.png
+ * where ${country_abbreviation} is the abbreviation for a country
+ * All flag images are under the public domain
+ * */
+
 (function() {
     "use strict";
 
@@ -10,7 +20,6 @@
     .then(data => countryCodes = swapObject(data))
     .catch(error => alert(error));
 
-    
     /* Array of country objects from github repo country-json: https://github.com/samayo/country-json */
     fetch("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-continent.json")
     .then(response => response.json())
@@ -23,36 +32,18 @@
         document.getElementById("start-btn").addEventListener("click", function() {
             toggleView();
 
+            /*  Getting random array of the coutries to be quizzed on */
             let countries = getCountries(countryContinent);
             shuffle(countries)
-
-            // console logging
             console.log(countries)
-            console.log(countryCodes)
-            console.log(countryCodes["Andorra"])
-            
+
+            /* Generating Anwsers for the countries */
+            generateAnswers(countries);
+
             setTimeout(() => {
                 /* game(); */
             }, 1000);
         })
-    }
-
-    /**
-     * Swaps the key value pairs of an object
-     * This is used only at the beginning of loading the website
-     * @param {Object} countries - an object
-     * @returns {Object}
-     */
-    function swapObject(object) {
-        let temp = {};
-        Object.entries(object).forEach(pair => {
-            let value = pair[0]
-            let property = pair[1];
-            
-            temp[property] = value;
-        });
-
-        return temp;
     }
     
     /**
@@ -80,6 +71,27 @@
             array[i] = array[j];
             array[j] = temp;
         }
+    }
+
+    /**
+     * Generates quiz answers
+     * @param {array} countries - array of countries to generate anwsers for
+     */
+    function generateAnswers(array) {
+        let bank = document.getElementById("answer-bank")
+
+        for(let i = 0; i < array.length; i++) {
+            let btn = document.createElement("button");
+            btn.innerText = array[i].country
+
+            btn.addEventListener("click", function() {
+                console.log(btn.innerText)
+                btn.remove();
+            }); // gives button event listener
+
+            bank.appendChild(btn)
+        }
+
     }
 
     async function game(countries) {
@@ -145,9 +157,22 @@
         return correct_country;
     }
 
-    // generates the four choice buttons
-    function generateButtons(country_array, correct_country) {
-
+    /**
+     * Swaps the key value pairs of an object
+     * This is used only at the beginning of loading the website
+     * @param {Object} countries - an object
+     * @returns {Object}
+     */
+    function swapObject(object) {
+        let temp = {};
+        Object.entries(object).forEach(pair => {
+            let value = pair[0]
+            let property = pair[1];
+                
+            temp[property] = value;
+        });
+    
+        return temp;
     }
 
     function toggleView() {

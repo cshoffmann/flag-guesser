@@ -77,8 +77,16 @@ h1 {
     padding: 10px;
 }
 
-#user-input {
-    margin-top: 10px;
+#answer-bank {
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 40%;
+}
+
+#answer-bank button{
+    margin: 2px;
 }
 
 .quick {
