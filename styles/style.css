@@ -42,13 +42,32 @@ h1 {
     left: 0;
     right: 0;
     margin: auto;
-    width: 60%;
+    width: 50%;
     background-color: white;
     opacity: 90%;
 }
 
 #menu-desc {
     width: 80%;
+}
+
+#game-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+#start-btn {
+    font-family: 'Sriracha', cursive;
+    font-size: 3rem;
+    background-color: white;
+    border: none;
+}
+
+#start-btn:hover {
+    color: red;
 }
 
 #game-view {
@@ -89,10 +108,13 @@ h1 {
 #answer-bank button{
     margin: 5px;
     padding: 3px 6px;
-    font-family: inherit;
+    font: inherit;
     font-weight: bold;
-    font-size: 1rem;
     border: 2px solid black;
+}
+
+#answer-bank button:hover {
+    color: red;
 }
 
 .hidden {
