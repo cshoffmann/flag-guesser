@@ -1,31 +1,22 @@
-/**
- * Data of country abbreviations and continents comes from github repo "country-json" 
- * GitHub repo is linked here: https://github.com/samayo/country-json
- * 
- * PNG images of flags from from flagpedia API and are under the public domain: https://flagpedia.net/
- * Flag images come from this url template: https://flagcdn.com/256x192/${country_abbreviation}.png
- * where ${country_abbreviation} is the abbreviation for a country
- * These PNG's are under the public domain
- * */
-
 (function() {
     "use strict";
 
     var countryContinent;
-    var countryAbbreviation;
+    var countryCodes;
 
-    /* Array of country objects with country name and continent from github repo country-json */
+    /* country names, iso codes and flags from flagpedia API: https://flagpedia.net/ */
+    fetch("https://flagcdn.com/en/codes.json")
+    .then(response => response.json())
+    .then(data => countryCodes = swapObject(data))
+    .catch(error => alert(error));
+
+    
+    /* Array of country objects from github repo country-json: https://github.com/samayo/country-json */
     fetch("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-continent.json")
     .then(response => response.json())
     .then(data => countryContinent = data)
     .catch(error => alert(error));
-
-    /* Array of country objects with country names and abbreviations */
-    fetch("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-abbreviation.json")
-    .then(response => response.json())
-    .then(data => countryAbbreviation = data)
-    .catch(error => alert(error));
-
+    
     window.onload = function() {
 
         /* event listener for play button */
@@ -34,26 +25,34 @@
 
             let countries = getCountries(countryContinent);
             shuffle(countries)
+
+            // console logging
             console.log(countries)
+            console.log(countryCodes)
+            console.log(countryCodes["Andorra"])
             
             setTimeout(() => {
-                console.log(countryContinent)
-                console.log(countryCodes)
-                console.log(countryCodes["Andorra"])
-
-
                 /* game(); */
             }, 1000);
         })
     }
 
-    function innerJoin(a, b) {
-        // a = countries
-        // b = countyCodes
-
-        a.forEach(element => {
-            element.country
+    /**
+     * Swaps the key value pairs of an object
+     * This is used only at the beginning of loading the website
+     * @param {Object} countries - an object
+     * @returns {Object}
+     */
+    function swapObject(object) {
+        let temp = {};
+        Object.entries(object).forEach(pair => {
+            let value = pair[0]
+            let property = pair[1];
+            
+            temp[property] = value;
         });
+
+        return temp;
     }
     
     /**
