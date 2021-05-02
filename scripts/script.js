@@ -83,7 +83,6 @@
 
     /**
      * Waits for user to select click on answer button, activiting the "click" event and calling buttonClick() function
-     * 
      */
     async function round() {  
         return new Promise(resolve => {
@@ -112,11 +111,13 @@
         for(let i = 0; i < array.length; i++) {
             let btn = document.createElement("button");
             btn.innerText = array[i].country
+
             btn.classList.add("button")
+            btn.id = array[i].country
+
             btn.addEventListener("click", buttonClick)
             wordBank.appendChild(btn)
         }
-        console.log(document.querySelectorAll(".button"))
     }
 
     /**
@@ -125,22 +126,29 @@
      */
     function buttonClick() {
         choice = this.innerText;
-        checkAnswer()
+        checkAnswer(this)
     }
 
     /**
-     * Updates the UI to inform the player whether their choice is correct or incorrect
+     * Updates the UI to inform the player whether their choice is correct or incorrect.
+     * If correct, UI changes to green and removes button user chose.
+     * If incorrect, UI changes to red and removes correct button.
      */
-    function checkAnswer() {
+    function checkAnswer(btn) {
         const roundUI = document.getElementById("round");
 
         if(choice == correct) {
-            roundUI.classList.add("correct")
-            console.log(roundUI)
-            roundUI.innerText = "Correct!"  
+            roundUI.classList.add("correct");
+            roundUI.innerText = "Correct!"; 
+
+            btn.remove()
         } else {
+            console.log(`The correct country is ${correct}!`)
             roundUI.classList.add("incorrect")
             roundUI.innerText = "Incorrect!"  
+
+            let btn = document.getElementById(correct)
+            btn.remove()
         }
     }
 
