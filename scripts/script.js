@@ -33,96 +33,42 @@
             toggleView();
 
             /*  Getting random array of the coutries to be quizzed on */
-            let countries = getCountries(countryContinent);
-            shuffle(countries)
-            console.log(countries)
+            let selectedCountries = getCountries(countryContinent);
 
             /* Generating Anwsers for the countries */
-            generateAnswers(countries);
+            generateButtons(selectedCountries);
+
+            /* Shuffles countries */
+            shuffle(selectedCountries)
+            console.log(selectedCountries)
 
             setTimeout(() => {
-                /* game(); */
+                game(selectedCountries);
             }, 1000);
         })
     }
-    
-    /**
-     * Returns a filtered array of countries based on continent (user input from #drop-down.value)
-     * @param {array} countries - array of countries
-     * @returns {array}
-     */
-    function getCountries(array) {
-        let region = document.getElementById("drop-down").value;
-        let temp = [];
-        temp = array.filter(country => country.continent == region); // will use filter to get countries of a region
-
-        return temp;
-    }
 
     /**
-     * Randomizes order of elements in an array. 
-     * Based off of Durstenfeld shuffle algorithm: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
-     * @param {array} array - any array
-     */
-    function shuffle(array) {
-        for(let i = array.length-1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i+1));
-            let temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
-    }
-
-    /**
-     * Generates quiz answers
+     * Starts the game, iterating through the flags to quiz the player
      * @param {array} countries - array of countries to generate anwsers for
      */
-    function generateAnswers(array) {
-        let bank = document.getElementById("answer-bank")
-
-        for(let i = 0; i < array.length; i++) {
-            let btn = document.createElement("button");
-            btn.innerText = array[i].country
-
-            btn.addEventListener("click", function() {
-                console.log(btn.innerText)
-                btn.remove();
-            }); // gives button event listener
-
-            bank.appendChild(btn)
-        }
-
-    }
-
     async function game(countries) {
         const roundUI = document.getElementById("round");
         let rounds = countries.length
-        let anwsers = [];
+        // let anwsers = [];
 
         for(let i = 0; i < rounds; i++) {
+            let correct = countries[i].country // current country name
+            displayFlag(correct);
+            console.log(`The correct country is: ${correct}`)
 
-            let correct = generateFlag(countries); // picks the country to generate flag and returns correct country name
-            console.log("The correct country is: " + countryCodes[correct] + " (country code = " + correct +")")
-
-            generateButtons(countries, correct); // creates four buttons based off of randomCountries() and generateFlat()
-            roundUI.innerText = `Round ${i+1}`
+            roundUI.innerText = `Round: ${i+1} / ${rounds}`
 
             let anwser = await round();
             console.log("anwser: "+anwser);
             anwsers.push(anwser)
 
         }
-        console.log(anwsers)
-
-        // tells the user how many flags they got correct at the end
-        let correct = 0
-        for(let i = 0; i < anwsers.length; i++) {
-            if(anwsers[i] == 1) {
-                correct++;
-            }
-        }
-        alert("You got "+correct+" out of "+anwsers.length+" flags correct")
-        toggleView();
     }
 
     // starts the timer from 10 seconds
@@ -147,14 +93,61 @@
         })
     }
 
-    function generateFlag(ary) {
-        let rand = Math.floor(Math.random() * 4) // number between [0, 3]
-        let correct_country = ary[rand] // selects first element from array
+    /**
+     * Generates quiz buttons 
+     * @param {array} array - array of countries to generate anwsers for
+     */
+    function generateButtons(array) {
+        let wordBank = document.getElementById("answer-bank")
 
+        for(let i = 0; i < array.length; i++) {
+            let btn = document.createElement("button");
+            btn.innerText = array[i].country
+
+            // btn event listener
+            btn.addEventListener("click", function() {
+                console.log(btn.innerText)
+                btn.remove();
+            });
+            wordBank.appendChild(btn)
+        }
+    }
+
+    /**
+     * Takes a country object, finds it abbreviation and displays it's flag
+     * @param {string} countryName - a country object
+     */
+    function displayFlag(countryName) {
         let flag = document.getElementById("flag-image")
-        flag.src = `https://flagcdn.com/256x192/${correct_country}.png`
+        let abbreviation = (countryCodes[countryName])
+        flag.src = `https://flagcdn.com/256x192/${abbreviation}.png`
+    }
 
-        return correct_country;
+    /**
+     * Returns a filtered array of countries based on continent (user input from #drop-down.value)
+     * @param {array} countries - array of countries
+     * @returns {array}
+     */
+    function getCountries(array) {
+        let region = document.getElementById("drop-down").value;
+        let temp = [];
+        temp = array.filter(country => country.continent == region); // will use filter to get countries of a region
+    
+        return temp;
+    }
+
+    /**
+    * Randomizes order of elements in an array. 
+    * Based off of Durstenfeld shuffle algorithm: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+    * @param {array} array - any array
+    */
+    function shuffle(array) {
+        for(let i = array.length-1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i+1));
+            let temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
     }
 
     /**
@@ -168,10 +161,8 @@
         Object.entries(object).forEach(pair => {
             let value = pair[0]
             let property = pair[1];
-                
             temp[property] = value;
         });
-    
         return temp;
     }
 
