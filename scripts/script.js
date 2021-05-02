@@ -13,6 +13,7 @@
 
     var countryContinent;
     var countryCodes;
+    var choice;
 
     /* country names, iso codes and flags from flagpedia API: https://flagpedia.net/ */
     fetch("https://flagcdn.com/en/codes.json")
@@ -55,41 +56,33 @@
     async function game(countries) {
         const roundUI = document.getElementById("round");
         let rounds = countries.length
-        // let anwsers = [];
+        let anwsers = [];
 
         for(let i = 0; i < rounds; i++) {
             let correct = countries[i].country // current country name
             displayFlag(correct);
-            console.log(`The correct country is: ${correct}`)
-
             roundUI.innerText = `Round: ${i+1} / ${rounds}`
-
+            
             let anwser = await round();
-            console.log("anwser: "+anwser);
+            console.log(`The user chose: ${anwser}`);
             anwsers.push(anwser)
-
         }
     }
 
-    // starts the timer from 10 seconds
-    async function round() {
-        // add event listeners for buttons 
-        let btns = document.querySelectorAll(".btn")
-        var choice = null;
-
-        btns.forEach(element => { // event listeners for buttons
-            element.addEventListener("click", function() {
-                choice = this.value 
-            })
-        });
-
+    /**
+     * Waits for user to select click on answer button, activiting the "click" event and calling buttonClick() function
+     * 
+     */
+    async function round() {  
         return new Promise(resolve => {
+
             var timerid = setInterval(() => {
                 if(choice != null) {
                     clearInterval(timerid);
                     resolve(choice);
+                    choice = null;
                 }
-            }, 500);
+            }, 500); 
         })
     }
 
@@ -103,14 +96,18 @@
         for(let i = 0; i < array.length; i++) {
             let btn = document.createElement("button");
             btn.innerText = array[i].country
-
-            // btn event listener
-            btn.addEventListener("click", function() {
-                console.log(btn.innerText)
-                btn.remove();
-            });
+            btn.addEventListener("click", buttonClick)
             wordBank.appendChild(btn)
         }
+    }
+
+    /**
+     * Event listener for the answer buttons that will be generated. Assigns the country
+     * name of the corresponding button to to the global variable choice, and removes itself
+     */
+    function buttonClick() {
+        choice = this.innerText;
+        this.remove();
     }
 
     /**
@@ -120,6 +117,13 @@
     function displayFlag(countryName) {
         let flag = document.getElementById("flag-image")
         let abbreviation = (countryCodes[countryName])
+
+        /* special case */
+        if(abbreviation == undefined) {
+            console.log("SPECIAL CASE")
+        }
+
+        console.log(`The correct country is: ${countryName} (${abbreviation})`)
         flag.src = `https://flagcdn.com/256x192/${abbreviation}.png`
     }
 
