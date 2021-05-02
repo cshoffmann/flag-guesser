@@ -1,35 +1,59 @@
+/**
+ * Data of country abbreviations and continents comes from github repo "country-json" 
+ * GitHub repo is linked here: https://github.com/samayo/country-json
+ * 
+ * PNG images of flags from from flagpedia API and are under the public domain: https://flagpedia.net/
+ * Flag images come from this url template: https://flagcdn.com/256x192/${country_abbreviation}.png
+ * where ${country_abbreviation} is the abbreviation for a country
+ * These PNG's are under the public domain
+ * */
+
 (function() {
     "use strict";
 
-    var worldCountries;
-    var countryCodes;
+    var countryContinent;
+    var countryAbbreviation;
 
-    /* country names, iso codes and flags from flagpedia API: https://flagpedia.net/ */
-    fetch("https://flagcdn.com/en/codes.json")
-    .then(response => response.json())
-    .then(data => countryCodes = data)
-    .catch(error => alert(error));
-
-    /* Array of country objects from github repo country-json: https://github.com/samayo/country-json */
+    /* Array of country objects with country name and continent from github repo country-json */
     fetch("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-continent.json")
     .then(response => response.json())
-    .then(data => worldCountries = data)
+    .then(data => countryContinent = data)
     .catch(error => alert(error));
-    
+
+    /* Array of country objects with country names and abbreviations */
+    fetch("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-abbreviation.json")
+    .then(response => response.json())
+    .then(data => countryAbbreviation = data)
+    .catch(error => alert(error));
+
     window.onload = function() {
 
         /* event listener for play button */
         document.getElementById("start-btn").addEventListener("click", function() {
             toggleView();
-            let countries = getCountries(worldCountries);
-            shuffle(countries) // shuffles countries
+
+            let countries = getCountries(countryContinent);
+            shuffle(countries)
             console.log(countries)
             
-
             setTimeout(() => {
+                console.log(countryContinent)
+                console.log(countryCodes)
+                console.log(countryCodes["Andorra"])
+
+
                 /* game(); */
             }, 1000);
         })
+    }
+
+    function innerJoin(a, b) {
+        // a = countries
+        // b = countyCodes
+
+        a.forEach(element => {
+            element.country
+        });
     }
     
     /**
@@ -41,7 +65,7 @@
         let region = document.getElementById("drop-down").value;
         let temp = [];
         temp = array.filter(country => country.continent == region); // will use filter to get countries of a region
-        
+
         return temp;
     }
 
@@ -59,14 +83,12 @@
         }
     }
 
-    async function game() {
+    async function game(countries) {
         const roundUI = document.getElementById("round");
-        let rounds = document.getElementById("drop-down").value
+        let rounds = countries.length
         let anwsers = [];
 
         for(let i = 0; i < rounds; i++) {
-            let countries = randomCountries(); // gets four random countries
-            console.log(countries);
 
             let correct = generateFlag(countries); // picks the country to generate flag and returns correct country name
             console.log("The correct country is: " + countryCodes[correct] + " (country code = " + correct +")")
@@ -114,26 +136,6 @@
         })
     }
 
-    function randomCountries() {
-        let temp = [];
-
-        for(let i = 0; i < 4; i++) {
-            let rand = Math.floor(Math.random() * country_codes.length);
-            let random_country = country_codes[rand];
-            temp.push(random_country);
-
-            // makes sure all countries in temp[] are unique
-            for(let x = 0; x < temp.length; x++) { 
-                if(random_country == temp[x-1]) {
-                    temp.pop(random_country);
-                    i--;
-                    break;
-                }
-            }
-        }
-        return temp
-    }
-
     function generateFlag(ary) {
         let rand = Math.floor(Math.random() * 4) // number between [0, 3]
         let correct_country = ary[rand] // selects first element from array
@@ -146,23 +148,7 @@
 
     // generates the four choice buttons
     function generateButtons(country_array, correct_country) {
-        const input = document.getElementById("user-input");
-        input.textContent = "" // clears any previous buttons
 
-        for(let i = 0; i < country_array.length; i++) {
-            let country = country_array[i];
-            let btn = document.createElement("button");
-            btn.classList.add("btn")
-
-            if(country == correct_country) {
-                btn.value = 1; // indicates correct anwser
-            } else {
-                btn.value = 0; // indicates wrong anwser
-            }
-
-            btn.textContent = countryCodes[country];
-            input.appendChild(btn);
-        }
     }
 
     function toggleView() {
