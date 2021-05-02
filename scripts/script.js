@@ -32,6 +32,7 @@
         /* event listener for play button */
         document.getElementById("start-btn").addEventListener("click", function() {
             toggleView();
+            console.log(countryContinent)
 
             /*  Getting random array of the coutries to be quizzed on */
             let selectedCountries = getCountries(countryContinent);
@@ -56,17 +57,49 @@
     async function game(countries) {
         const roundUI = document.getElementById("round");
         let rounds = countries.length
-        let anwsers = [];
+        let score = [];
 
         for(let i = 0; i < rounds; i++) {
             let correct = countries[i].country // current country name
             displayFlag(correct);
             roundUI.innerText = `Round: ${i+1} / ${rounds}`
             
-            let anwser = await round();
-            console.log(`The user chose: ${anwser}`);
-            anwsers.push(anwser)
+            let answer = await round();
+            console.log(`The user chose: ${answer}`);
+
+            if(correct == answer) { // user chooses correct answer
+                console.log("Correct!");
+                score.push(1);
+                isCorrect(roundUI);
+            }
+            else { // user chooses wrong answer
+                console.log("Wrong");
+                score.push(0);
+                isWrong(roundUI);
+            }
+            console.log(score)
         }
+    }
+
+    /**
+     * Does something if the user selects the correct answer
+     * @param {Element} ui - DOM element that updates
+     */
+    function isCorrect(ui) {
+        console.log(ui)
+        ui.innerText = "Correct!"
+        const wait = async () => {
+            await delay(2000)
+            console.log("waited 2 seconds")
+        }
+    }
+
+    /**
+     * Does something if the user selects the worng answer
+     * @param {Element} ui - DOM element that updates
+     */
+    function isWrong(ui) {
+
     }
 
     /**
@@ -82,7 +115,7 @@
                     resolve(choice);
                     choice = null;
                 }
-            }, 500); 
+            }, 100); 
         })
     }
 
