@@ -91,18 +91,18 @@
                 if(choice != null) {
                     clearInterval(timerid);
 
-                    /* wait two seconds until going to next round */
+                    /* wait three seconds until going to next round */
                     setTimeout(() => {
                         resolve(choice);
                         choice = null;
-                    }, 2000);
+                    }, 3000);
                 }
             }, 100); 
         })
     }
 
     /**
-     * Generates quiz buttons 
+     * Generates quiz buttons and gives each button an event listener that calls to checkAnswer() onclick
      * @param {array} array - array of countries to generate anwsers for
      */
     function generateButtons(array) {
@@ -115,18 +115,13 @@
             btn.classList.add("button")
             btn.id = array[i].country
 
-            btn.addEventListener("click", buttonClick)
+            /* Event listener for the buttons */
+            btn.addEventListener("click", function() {
+                choice = this.innerText;
+                checkAnswer(this);
+            })
             wordBank.appendChild(btn)
         }
-    }
-
-    /**
-     * Event listener for the answer buttons that will be generated. Assigns the country
-     * name of the corresponding button to to the global variable choice, and removes itself
-     */
-    function buttonClick() {
-        choice = this.innerText;
-        checkAnswer(this)
     }
 
     /**
