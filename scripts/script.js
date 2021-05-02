@@ -82,26 +82,6 @@
     }
 
     /**
-     * Does something if the user selects the correct answer
-     * @param {Element} ui - DOM element that updates
-     */
-    async function isCorrect() {
-        const roundUI = document.getElementById("round");
-        roundUI
-        roundUI.innerText = "Correct!"        
-    }
-
-    /**
-     * Does something if the user selects the worng answer
-     * @param {Element} ui - DOM element that updates
-     */
-    function isWrong(ui) {
-        const roundUI = document.getElementById("round");
-        roundUI.innerText = "Correct!"   
-
-    }
-
-    /**
      * Waits for user to select click on answer button, activiting the "click" event and calling buttonClick() function
      * 
      */
@@ -148,6 +128,9 @@
         checkAnswer()
     }
 
+    /**
+     * Updates the UI to inform the player whether their choice is correct or incorrect
+     */
     function checkAnswer() {
         const roundUI = document.getElementById("round");
 
