@@ -105,7 +105,11 @@ h1 {
     overflow: auto;
 }
 
-#answer-bank button{
+#answer-bank button:hover {
+    color: red;
+}
+
+.button {
     margin: 5px;
     padding: 3px 6px;
     font: inherit;
@@ -113,8 +117,12 @@ h1 {
     border: 2px solid black;
 }
 
-#answer-bank button:hover {
-    color: red;
+#round.correct {
+    color: lightgreen;
+}
+
+#round.incorrect {
+    color: rgb(250, 120, 120);
 }
 
 .hidden {

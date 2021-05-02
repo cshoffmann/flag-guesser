@@ -14,6 +14,7 @@
     var countryContinent;
     var countryCodes;
     var choice;
+    var correct;
 
     /* country names, iso codes and flags from flagpedia API: https://flagpedia.net/ */
     fetch("https://flagcdn.com/en/codes.json")
@@ -60,9 +61,10 @@
         let score = [];
 
         for(let i = 0; i < rounds; i++) {
-            let correct = countries[i].country // current country name
+            correct = countries[i].country // current country name
             displayFlag(correct);
             roundUI.innerText = `Round: ${i+1} / ${rounds}`
+            roundUI.className = "";
             
             let answer = await round();
             console.log(`The user chose: ${answer}`);
@@ -70,12 +72,10 @@
             if(correct == answer) { // user chooses correct answer
                 console.log("Correct!");
                 score.push(1);
-                isCorrect(roundUI);
             }
             else { // user chooses wrong answer
                 console.log("Wrong");
                 score.push(0);
-                isWrong(roundUI);
             }
             console.log(score)
         }
@@ -85,13 +85,10 @@
      * Does something if the user selects the correct answer
      * @param {Element} ui - DOM element that updates
      */
-    function isCorrect(ui) {
-        console.log(ui)
-        ui.innerText = "Correct!"
-        const wait = async () => {
-            await delay(2000)
-            console.log("waited 2 seconds")
-        }
+    async function isCorrect() {
+        const roundUI = document.getElementById("round");
+        roundUI
+        roundUI.innerText = "Correct!"        
     }
 
     /**
@@ -99,6 +96,8 @@
      * @param {Element} ui - DOM element that updates
      */
     function isWrong(ui) {
+        const roundUI = document.getElementById("round");
+        roundUI.innerText = "Correct!"   
 
     }
 
@@ -112,8 +111,12 @@
             var timerid = setInterval(() => {
                 if(choice != null) {
                     clearInterval(timerid);
-                    resolve(choice);
-                    choice = null;
+
+                    /* wait two seconds until going to next round */
+                    setTimeout(() => {
+                        resolve(choice);
+                        choice = null;
+                    }, 2000);
                 }
             }, 100); 
         })
@@ -129,9 +132,11 @@
         for(let i = 0; i < array.length; i++) {
             let btn = document.createElement("button");
             btn.innerText = array[i].country
+            btn.classList.add("button")
             btn.addEventListener("click", buttonClick)
             wordBank.appendChild(btn)
         }
+        console.log(document.querySelectorAll(".button"))
     }
 
     /**
@@ -140,7 +145,20 @@
      */
     function buttonClick() {
         choice = this.innerText;
-        this.remove();
+        checkAnswer()
+    }
+
+    function checkAnswer() {
+        const roundUI = document.getElementById("round");
+
+        if(choice == correct) {
+            roundUI.classList.add("correct")
+            console.log(roundUI)
+            roundUI.innerText = "Correct!"  
+        } else {
+            roundUI.classList.add("incorrect")
+            roundUI.innerText = "Incorrect!"  
+        }
     }
 
     /**
