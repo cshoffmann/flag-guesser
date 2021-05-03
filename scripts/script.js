@@ -49,6 +49,11 @@
                 game(selectedCountries);
             }, 1000);
         })
+
+        /* event listener for back button */
+        document.getElementById("back").addEventListener("click", function() {
+            window.location.reload()
+        })
     }
 
     /**
