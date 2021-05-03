@@ -33,17 +33,13 @@
         /* event listener for play button */
         document.getElementById("start-btn").addEventListener("click", function() {
             toggleView();
-            console.log(countryContinent)
 
             /*  Getting random array of the coutries to be quizzed on */
             let selectedCountries = getCountries(countryContinent);
-
             /* Generating Anwsers for the countries */
             generateButtons(selectedCountries);
-
             /* Shuffles countries */
             shuffle(selectedCountries)
-            console.log(selectedCountries)
 
             setTimeout(() => {
                 game(selectedCountries);
@@ -52,7 +48,7 @@
 
         /* event listener for back button */
         document.getElementById("back").addEventListener("click", function() {
-            window.location.reload()
+            window.location.reload();
         })
     }
 
@@ -63,27 +59,23 @@
     async function game(countries) {
         const roundUI = document.getElementById("round");
         let rounds = countries.length
-        let score = [];
+        let scores = [];
 
         for(let i = 0; i < rounds; i++) {
             correct = countries[i].country // current country name
-            displayFlag(correct);
             roundUI.innerText = `Round: ${i+1} / ${rounds}`
             roundUI.className = "";
+            displayFlag(correct);
             
             let answer = await round();
-            console.log(`The user chose: ${answer}`);
-
             if(correct == answer) { // user chooses correct answer
-                console.log("Correct!");
-                score.push(1);
+                scores.push(1);
             }
             else { // user chooses wrong answer
-                console.log("Wrong");
-                score.push(0);
+                scores.push(0);
             }
-            console.log(score)
         }
+        grade(scores)
     }
 
     /**
@@ -100,7 +92,7 @@
                     setTimeout(() => {
                         resolve(choice);
                         choice = null;
-                    }, 3000);
+                    }, 500);
                 }
             }, 100); 
         })
@@ -139,13 +131,13 @@
 
         if(choice == correct) {
             roundUI.classList.add("correct");
-            roundUI.innerText = "Correct!"; 
+            roundUI.innerText = `Correct! ${correct}`; 
 
             btn.remove()
         } else {
             console.log(`The correct country is ${correct}!`)
             roundUI.classList.add("incorrect")
-            roundUI.innerText = "Incorrect!"  
+            roundUI.innerText = `Incorrect! ${correct}` 
 
             let btn = document.getElementById(correct)
             btn.remove()
@@ -159,10 +151,12 @@
     function displayFlag(countryName) {
         let flag = document.getElementById("flag-image")
         let abbreviation = (countryCodes[countryName])
+        console.log(abbreviation)
 
         /* special case */
         if(abbreviation == undefined) {
-            console.log("SPECIAL CASE")
+            let roundUI = document.getElementById("round")
+            roundUI.innerText = `Error loading ${countryName} flag`;
         }
 
         console.log(`The correct country is: ${countryName} (${abbreviation})`)
@@ -180,6 +174,21 @@
         temp = array.filter(country => country.continent == region); // will use filter to get countries of a region
     
         return temp;
+    }
+
+    /**
+     * Calculates the number of flags the user got correct and displays the score
+     * @param {array} array - array of scores (1 is correct, 0 is wrong)
+     */
+    function grade(array) {
+        let correct = 0;
+        array.forEach(element => {
+            correct += element;
+        });
+    
+        let grade = ((correct / array.length)*100).toFixed(2) // percentage with two decimal places
+        alert(`You got ${grade}% (${correct} / ${array.length}) flags correct. Thanks for playing!`);
+        window.location.reload();
     }
 
     /**
