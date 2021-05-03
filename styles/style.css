@@ -74,11 +74,31 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 20px;
+}
+
+#game-header {
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    width: 98%;
+    padding-top: 20px;
+}
+
+#back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    font-size: 1.2rem;
+}
+
+#back:hover {
+    color: red;
 }
 
 #round {
-    font-size: 50px;
+    font-size: 60px;
     color: white;
 }
 
