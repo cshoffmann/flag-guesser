@@ -13,10 +13,6 @@ In order to currently play flag guesser, install the repo by using the command:
 ```bash
 $ git clone https://github.com/CSHoffmann/flag-guesser.git
 ```
-<<<<<<< HEAD
-
-=======
->>>>>>> 0d9d0d1c4983893f4ea74dd29349474cfed24ac8
 in your terminal/command line. 
 
 Once you have successfully downloaded it to your local machine, open the file
