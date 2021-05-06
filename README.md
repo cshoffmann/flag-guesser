@@ -8,7 +8,7 @@ related data from GitHub repository [country-json](https://github.com/samayo/cou
 
 # How to Play
 
-In order to currently play flag guesser, you can either play online [here](https://cshoffmann.github.io/flag-guesser/)
+In order to currently play flag guesser, you can either play online [here](https://cshoffmann.github.io/flag-guesser/),
 or you can download the repo using the in a terminal/command line below:
 
 ```bash
