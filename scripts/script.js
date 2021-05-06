@@ -92,7 +92,7 @@
                     setTimeout(() => {
                         resolve(choice);
                         choice = null;
-                    }, 500);
+                    }, 2500);
                 }
             }, 100); 
         })
