@@ -8,11 +8,9 @@ related data from GitHub repository [country-json](https://github.com/samayo/cou
 
 # How to Play
 
-In order to currently play flag guesser, you can either play online [here](https://cshoffmann.github.io/flag-guesser/),
-or you can download the repo using the in a terminal/command line below:
+You can play online using a web browser (Chrome and Firefox preferred) [here](https://cshoffmann.github.io/flag-guesser/), or you can 
+download this repo to your computer using git: 
 
 ```bash
 $ git clone https://github.com/CSHoffmann/flag-guesser.git
 ```
-
-The game works best using either Google Chrome or Firefox as your web browser
