@@ -135,7 +135,6 @@
 
             btn.remove()
         } else {
-            console.log(`The correct country is ${correct}!`)
             roundUI.classList.add("incorrect")
             roundUI.innerText = `Incorrect! ${correct}` 
 
@@ -151,7 +150,6 @@
     function displayFlag(countryName) {
         let flag = document.getElementById("flag-image")
         let abbreviation = (countryCodes[countryName])
-        console.log(abbreviation)
 
         /* special case */
         if(abbreviation == undefined) {
