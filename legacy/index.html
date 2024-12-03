@@ -1,73 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flag Guesser</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300&family=Sriracha&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@300&family=Sriracha&display=swap"
+      rel="stylesheet"
+    />
     <script src="scripts/script.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Flag Guesser</h1>
+      <h1>Flag Guesser</h1>
     </header>
     <main>
-        <!-- Menu view will show display instructions and allow the user to choose between quiz mode and learn mode -->
-        <section id="menu-view">
-            <div id="input-container">
-                <section id="menu-desc">
-                    <h2>What is Flag Guesser?</h2>
-                    <p>
-                        Flag Guesser is a light, interactive game that tests your knowledge of world maps. 
-                        The game features world maps from 200+ countries and territories! The flags are divided
-                        into continental regions.
-                        
-                    </p>
-                    <p>
-                        Flag guesser supports the following six continental regions: 
-                        <strong>North America, South America, Europe, Asia, Africa, and Oceania.</strong>
-                        In Flag guesser, carribean countries are considered apart of North America and the middle east
-                        region is considered apart of Asia. This is not due to any political reasons.
-                    </p>
-                    <h2>How to Play</h2>
-                    <p>
-                        Select your region and press the play button. Once the game begins, a word bank
-                        of all possible countries for that region will appear. Click on the country name
-                        that you think corresponds with the flag. You only have one chance to select the 
-                        correct country, so choose wisely!
-                    </p>
-                </section>
-                <article id="game-options">
-                    <label for="drop-down">Select a Region:
-                        <select id="drop-down">
-                            <option value="North America">North America</option>
-                            <option value="South America">South America</option>
-                            <option value="Europe">Europe</option>
-                            <option value="Asia">Asia</option>
-                            <option value="Africa">Africa</option>
-                            <option value="Oceania">Oceania</option>
-                          </select>
-                    </label>
-                    <button id="start-btn">Play</button>
-                </article>
-            </div>
-        </section>
+      <!-- Menu view will show display instructions and allow the user to choose between quiz mode and learn mode -->
+      <section id="menu-view">
+        <div id="input-container">
+          <section id="menu-desc">
+            <h2>What is Flag Guesser?</h2>
+            <p>
+              Flag Guesser is a light, interactive game that tests your
+              knowledge of world maps. The game features world maps from 200+
+              countries and territories! The flags are divided into continental
+              regions.
+            </p>
+            <p>
+              Flag guesser supports the following six continental regions:
+              <strong
+                >North America, South America, Europe, Asia, Africa, and
+                Oceania.</strong
+              >
+              In Flag guesser, carribean countries are considered apart of North
+              America and the middle east region is considered apart of Asia.
+              This is not due to any political reasons.
+            </p>
+            <h2>How to Play</h2>
+            <p>
+              Select your region and press the play button. Once the game
+              begins, a word bank of all possible countries for that region will
+              appear. Click on the country name that you think corresponds with
+              the flag. You only have one chance to select the correct country,
+              so choose wisely!
+            </p>
+          </section>
+          <article id="game-options">
+            <label for="drop-down"
+              >Select a Region:
+              <select id="drop-down">
+                <option value="North America">North America</option>
+                <option value="South America">South America</option>
+                <option value="Europe">Europe</option>
+                <option value="Asia">Asia</option>
+                <option value="Africa">Africa</option>
+                <option value="Oceania">Oceania</option>
+              </select>
+            </label>
+            <button id="start-btn">Play</button>
+          </article>
+        </div>
+      </section>
 
-        <!-- View that will display a random flag and the user must guess which one it is. The user will be scored at the ends-->
-        <section id="game-view" class="hidden">
-            <div id="game-header">
-                <span id="back">Back</span>
-                <span id="round">Loading...</span>
-            </div>
-            <div id="flag-container">
-                <img id="flag-image" src="">
-            </div>
-            <div id="answer-bank">
-            </div>
-        </section>
+      <!-- View that will display a random flag and the user must guess which one it is. The user will be scored at the ends-->
+      <section id="game-view" class="hidden">
+        <div id="game-header">
+          <span id="back">Back</span>
+          <span id="round">Loading...</span>
+        </div>
+        <div id="flag-container">
+          <img id="flag-image" src="" />
+        </div>
+        <div id="answer-bank"></div>
+      </section>
     </main>
-</body>
+  </body>
 </html>
